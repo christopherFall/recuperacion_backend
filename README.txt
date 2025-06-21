@@ -12,7 +12,7 @@ Este proyecto implementa el backend del sistema de gestión de instructores SENA
 
 ```bash
 git clone https://github.com/tu-usuario/recuperacion-backend.git
-cd backend-especialistas
+cd recuperacion-backend
 npm install
 cp .env.example .env
 ⚙️ Configura .env
@@ -42,7 +42,7 @@ Editar
 node ace serve --watch
 Accede en: http://localhost:3333
 
-🧑‍💻 Endpoints
+🧑‍💻 Endpoints de referencia basados en especialistas
 GET /especialistas → listar activos
 
 POST /especialistas → crear
