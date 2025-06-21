@@ -1,4 +1,4 @@
-// app/Validators/updateEspecialistaValidator.ts
+// app/Validators/updateInstructorValidator.ts
 import vine from '@vinejs/vine'
 
 export const updateEspecialistaValidator = vine.compile(

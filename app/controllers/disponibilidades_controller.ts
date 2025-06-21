@@ -50,4 +50,48 @@ export default class DisponibilidadesController {
     await disponibilidad.delete()
     return response.ok({ message: 'Disponibilidad eliminada correctamente' })
   }
+
+  async update({ params, request, response }: HttpContext) {
+    const disponibilidad = await Disponibilidad.findOrFail(params.id)
+    const { hora_inicio, hora_fin, dia_semana } = request.only([
+      'hora_inicio',
+      'hora_fin',
+      'dia_semana',
+    ])
+
+    if (hora_inicio >= hora_fin) {
+      return response.badRequest({
+        error: 'El rango horario es inválido: hora_inicio debe ser menor que hora_fin.',
+      })
+    }
+
+    const traslape = await Disponibilidad.query()
+      .where('especialista_id', disponibilidad.especialista_id)
+      .where('id', '!=', disponibilidad.id)
+      .where('dia_semana', dia_semana)
+      .where((query) => {
+        query
+          .whereBetween('hora_inicio', [hora_inicio, hora_fin])
+          .orWhereBetween('hora_fin', [hora_inicio, hora_fin])
+          .orWhere((q) => {
+            q.where('hora_inicio', '<', hora_inicio).where('hora_fin', '>', hora_fin)
+          })
+      })
+      .first()
+
+    if (traslape) {
+      return response.badRequest({
+        error: 'Existe un traslape con otro horario asignado para este día.',
+      })
+    }
+
+    disponibilidad.merge({
+      hora_inicio,
+      hora_fin,
+      dia_semana,
+    })
+
+    await disponibilidad.save()
+    return response.ok(disponibilidad)
+  }
 }

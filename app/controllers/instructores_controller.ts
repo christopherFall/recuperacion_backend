@@ -1,7 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Especialista from '#models/especialista'
 import Disponibilidad from '#models/disponibilidad'
-import { createEspecialistaValidator } from '#validators/createEspecialistaValidator'
+import { createInstructorValidator } from '#validators/createInstructorValidator'
 import { updateEspecialistaValidator } from '#validators/updateEspecialistaValidator'
 
 export default class EspecialistasController {
@@ -29,7 +29,7 @@ export default class EspecialistasController {
   }
 
   async store({ request, response }: HttpContext) {
-    const data = await request.validateUsing(createEspecialistaValidator)
+    const data = await request.validateUsing(createInstructorValidator)
     const { disponibilidades, ...especialistaData } = request.only([
       'nombre_completo',
       'especialidad_id',
@@ -73,7 +73,7 @@ export default class EspecialistasController {
         .whereNot('id', especialista.id)
         .first()
       if (existe) {
-        return response.badRequest({ error: 'El número de registro ya está en uso' })
+        return response.badRequest({ error: 'El número de registro debe ser único.' })
       }
     }
 
@@ -102,14 +102,14 @@ export default class EspecialistasController {
     const especialista = await Especialista.findOrFail(params.id)
     especialista.activo = false
     await especialista.save()
-    return response.ok({ message: 'Especialista inactivado correctamente' })
+    return response.ok({ message: 'Instructor inactivado correctamente' })
   }
 
   async restore({ params, response }: HttpContext) {
     const especialista = await Especialista.findOrFail(params.id)
     especialista.activo = true
     await especialista.save()
-    return response.ok({ message: 'Especialista reactivado correctamente' })
+    return response.ok({ message: 'Instructor reactivado correctamente' })
   }
 
   async inactivos({ request }: HttpContext) {

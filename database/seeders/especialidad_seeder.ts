@@ -9,6 +9,8 @@ export default class extends BaseSeeder {
       { nombre: 'Inglés' },
       { nombre: 'Ciencias Naturales' },
       { nombre: 'Ética y Valores' },
+      { nombre: 'Cultura y religión' },
+      { nombre: 'Topografía' },
     ])
   }
 }
