@@ -1,64 +1,114 @@
-# Backend - Gestión de INSTRUCTORES SENA
+# Backend - Gestión de Instructores SENA
 
-Este proyecto implementa el backend del sistema de gestión de instructores SENA usando **AdonisJS 6**, con validaciones, relaciones y horario de clases dinámico por día.
+Este proyecto implementa el backend para un sistema de gestión de instructores del SENA. Permite registrar instructores, asignarles áreas, gestionar sus horarios semanales y aplicar soft delete para inactivarlos sin eliminar registros permanentemente.
 
-## 🚀 Requisitos
+## 🛠 Tecnologías
 
-- Node.js 18+
-- MariaDB (o MySQL)
-- Editor de código (VS Code recomendado)
+- [AdonisJS v6](https://docs.adonisjs.com/)
+- TypeScript
+- MySQL
+- VineJS (validaciones)
+- Soft Deletes
+- API RESTful
 
-## 📦 Instalación
+## 🚀 Instalación
+
+1. **Clona el repositorio:**
 
 ```bash
-git clone https://github.com/tu-usuario/recuperacion-backend.git
-cd recuperacion-backend
+git clone <url-del-repo>
+cd backend-instructores
+Instala las dependencias:
+
+bash
+Copiar
+Editar
 npm install
+Configura el entorno:
+
+Copia el archivo .env.example a .env:
+
+bash
+Copiar
+Editar
 cp .env.example .env
-⚙️ Configura .env
-Ajusta los datos de conexión a tu base de datos:
+Edita las variables necesarias como la conexión a la base de datos:
 
 ini
 Copiar
 Editar
-DB_CONNECTION = mysql
+DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_USER=
-DB_PASSWORD=tu_clave
-DB_DATABASE=
-🔧 Migraciones y seeders
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=instructores
+Ejecuta las migraciones y seeders:
+
 bash
 Copiar
 Editar
 node ace migration:run
 node ace db:seed
-Usa node ace migration:fresh --seed si quieres reiniciar todo.
+Puedes usar node ace migration:fresh --seed durante el desarrollo para reiniciar la base de datos.
 
-🧪 Iniciar servidor de desarrollo
+Inicia el servidor:
+
 bash
 Copiar
 Editar
-node ace serve --watch
-Accede en: http://localhost:3333
+npm run dev
+Por defecto, el backend estará disponible en:
+http://localhost:3333
 
-🧑‍💻 Endpoints de referencia basados en especialistas
-GET /especialistas → listar activos
+📁 Estructura del Proyecto
+bash
+Copiar
+Editar
+├── app/
+│   ├── controllers/     # Controladores HTTP
+│   ├── models/          # Modelos ORM (Lucid)
+│   └── validators/      # Validaciones con VineJS
+├── database/
+│   ├── migrations/      # Migraciones SQL
+│   ├── seeders/         # Datos de prueba iniciales
+│   └── factories/       # (opcional) Factories con datos fake
+├── config/              # Configuración general
+├── .env                 # Variables de entorno
+├── adonisrc.ts          # Config principal de Adonis
+└── tsconfig.json        # Config TypeScript
+🔑 Funcionalidades principales
+CRUD completo de Instructores
 
-POST /especialistas → crear
+Asignación de áreas por instructor
 
-PATCH /especialistas/:id → actualizar
+Gestión de horarios semanales con días y horas de inicio/fin
 
-DELETE /especialistas/:id → soft delete
+Gestión de áreas (CRUD)
 
-POST /especialistas/:id/restaurar → restaurar
+Visualización de instructores inactivos con opción de restaurar o eliminar
 
-GET /especialistas/inactivos → listar inactivos
+Validaciones con VineJS
 
-POST /disponibilidades / DELETE /disponibilidades/:id
+Soft delete usando deleted_at
+
+📬 Rutas API principales
+Método	Endpoint	Descripción
+GET	/instructores	Listar instructores paginados
+POST	/instructores	Crear instructor
+PUT	/instructores/:id	Actualizar instructor
+DELETE	/instructores/:id	Inactivar (soft delete) instructor
+GET	/areas	Listar áreas
+POST	/areas	Crear área
+PUT	/areas/:id	Actualizar área
+DELETE	/areas/:id	Eliminar área
+
+👤 Autor
+Desarrollado por: Los Básicos
+Contacto: [Tu correo o GitHub]
 
 👨‍🎓 Autor
-Christopher David Ramírez Pérez
+Christopher(Cristian) David Ramírez Pérez
 SENA - Evaluación Técnica Fullstack Junior
 TEMA: Instructores SENA
 BASE DE REFERENCIA: Especialistas
